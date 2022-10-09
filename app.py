@@ -11,8 +11,8 @@ from urllib.request import urlopen
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-app = Dash(__name__, external_stylesheets=external_stylesheets)
-# app = dash_app.server
+dash_app = Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash_app.server
 
 with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
     counties = json.load(response)
@@ -173,4 +173,4 @@ content=html.Div([
 app.layout = html.Div([content])
 
 if __name__ == '__main__':
-    app.run_server(debug=True, use_reloader=False)
+    dash_app.run_server(debug=True)
