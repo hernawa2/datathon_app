@@ -6,9 +6,13 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 import numpy as np, json
 import plotly.graph_objects as go
+from urllib.request import urlopen
 
-dash_app = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
-app = dash_app.server
+
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+
+app = Dash(__name__, external_stylesheets=external_stylesheets)
+# app = dash_app.server
 
 with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
     counties = json.load(response)
@@ -43,33 +47,33 @@ df_new_dl['value_log']=np.log10(df_new_dl['value'])
 # app.config.external_stylesheets = [dbc.themes.LUX]
 directed_edges=[
     {'data': {'id': 'A', 'label':'Per Capita Income','height':'100px', 'width':'180px'},
-     'position':{'x':175, 'y':50}, 'classes':'ellipse1'},
+     'position':{'x':1500, 'y':50}, 'classes':'ellipse1'},
     {'data': {'id': 'B', 'label':'Total Population','height':'100px', 'width':'180px'},
-     'position':{'x':500, 'y':300}, 'classes':'ellipse1'},
+     'position':{'x':1900, 'y':300}, 'classes':'ellipse1'},
     {'data': {'id': 'C', 'label':'Poverty','height':'100px', 'width':'180px'},
-     'position':{'x':225, 'y':450}, 'classes':'ellipse1'},
+     'position':{'x':1525, 'y':450}, 'classes':'ellipse1'},
     {'data': {'id': 'D', 'label':'Population Above the Age of 65','height':'100px', 'width':'180px'},
-     'position':{'x':400, 'y':600}, 'classes':'ellipse1'},
+     'position':{'x':1700, 'y':600}, 'classes':'ellipse1'},
     {'data': {'id': 'E', 'label':'Minority Population','height':'100px', 'width':'180px'},
-     'position':{'x':600, 'y':500}, 'classes':'ellipse1'},
+     'position':{'x':1900, 'y':500}, 'classes':'ellipse1'},
     {'data': {'id': 'F', 'label':'Number of Mobile Home','height':'100px', 'width':'180px'},
-     'position':{'x':700, 'y':50}, 'classes':'ellipse1'},
+     'position':{'x':1900, 'y':50}, 'classes':'ellipse1'},
     {'data': {'id': 'G', 'label':'Household with No Vehicle','height':'100px', 'width':'180px'},
-     'position':{'x':1000, 'y':50}, 'classes':'ellipse1'},
+     'position':{'x':2300, 'y':50}, 'classes':'ellipse1'},
     {'data': {'id': 'H', 'label':'Population Below the Age of 17','height':'100px', 'width':'180px'},
-     'position':{'x':950, 'y':350}, 'classes':'ellipse1'},
+     'position':{'x':2350, 'y':350}, 'classes':'ellipse1'},
     {'data': {'id': 'I', 'label':'Structure with more than 10 Units','height':'100px', 'width':'180px'},
-     'position':{'x':1200, 'y':250}, 'classes':'ellipse1'},
+     'position':{'x':2500, 'y':250}, 'classes':'ellipse1'},
     {'data': {'id': 'J', 'label':'Population with no High School Diploma','height':'100px', 'width':'180px'},
-     'position':{'x':850, 'y':500}, 'classes':'ellipse1'},
+     'position':{'x':2150, 'y':500}, 'classes':'ellipse1'},
     {'data': {'id': 'K', 'label':'Population who Speak English less than well','height':'100px', 'width':'180px'},
-     'position':{'x':1300, 'y':500}, 'classes':'ellipse1'},
+     'position':{'x':2600, 'y':500}, 'classes':'ellipse1'},
     {'data': {'id': 'L', 'label':'Number of Household','height':'100px', 'width':'180px'},
-     'position':{'x':1100, 'y':725}, 'classes':'ellipse1'},
+     'position':{'x':2400, 'y':725}, 'classes':'ellipse1'},
     {'data': {'id': 'M', 'label':'Household with more People than Rooms','height':'100px', 'width':'180px'},
-     'position':{'x':1100, 'y':725}, 'classes':'ellipse1'},
+     'position':{'x':2400, 'y':725}, 'classes':'ellipse1'},
     {'data': {'id': 'N', 'label':'Expected Number of COVID-19 Cases','height':'100px', 'width':'180px'},
-     'position':{'x':1700, 'y':250}, 'classes':'hexagon1'},  
+     'position':{'x':3000, 'y':250}, 'classes':'hexagon1'},  
     {'data':{'id':'A_B', 'source':'A','target':'G'}},
     {'data':{'id':'A_C', 'source':'B','target':'D'}},
     {'data':{'id':'A_F', 'source':'B','target':'E'}},
@@ -108,29 +112,7 @@ SIDEBAR_STYLE = {'position': 'fixed','top': 0,'left': 0,'bottom': 0,'width': '20
                  'background-color': '#f8f9fa'}
 CONTENT_STYLE = {'margin-left': '25%','margin-right': '5%','top': 0,'padding': '10px 10px'}
 TEXT_STYLE = {'textAlign': 'center','color': '#191970'}
-control=html.Div([html.P('Choose Evidence', style={'textAlign':'center'}),
-                      dcc.Dropdown(
-                          id='dropdown',
-                          options=[
-                              {'label':'Oyster Production in Campeche, MX','value':'1'},
-                              {'label':'Oyster Production in Tamaulipas, MX','value':'2'},
-                              {'label':'Oyster Production in Veracruz, MX','value':'3'},
-                              {'label':'Oyster Production in Tabasco, MX','value':'4'},
-                              {'label':'Oil Production in Gulf of Mexico, MX','value':'5'},
-                              {'label':'Natural Gas Production in Gulf of Mexico, MX','value':'6'},
-                              {'label':'Sea Level Rise from Tide Gauge Measured in Port Isabel, TX','value':'7'},
-                              {'label': 'Oyster Production in Alabama, US', 'value': '8'},
-                              {'label': 'Oyster Production in Florida, US', 'value': '9'},
-                              {'label': 'Oyster Production in Louisiana, US', 'value': '10'},
-                              {'label': 'Oyster Production in Mississippi, US', 'value': '11'},
-                              {'label': 'Oyster Production in Texas, US', 'value': '12'},
-                              {'label': 'Oil Production in Gulf of Mexico, US', 'value': '13'},
-                              {'label': 'Average High Temperature in Louisiana, US', 'value': '14'},], 
-                          value='1'
-    )])
-sidebar=html.Div([html.H2('Gulf of Mexico Risk Region',style=TEXT_STYLE),
-                html.Hr(),control,html.Br(),html.Br(),html.Br(),html.Br(),html.Br(),html.Br()],
-               style=SIDEBAR_STYLE,)
+
 
 
 def choro_fig_bn():
@@ -174,6 +156,12 @@ graph=dcc.Graph(id='graph-with-slider', figure=choro_fig_bn())
 content=html.Div([
     html.H2('COVID-19 TOTAL CASES MODEL BENCHMARK', style=TEXT_STYLE),
     html.Hr(),
+    html.H2('Model Methodology', style=TEXT_STYLE),
+    html.Br(),
+    html.H4('This exercise examines the viability of predictive model to estimate the total expected case of COVID-19 based on these variables:'),
+    html.Br(),
+    html.H4('Per Capita Income, Total Population, Poverty, Population above Age 65, Minority, Mobile Homes, Population with No Vehicle, Population below Age 17, Housing in Structures with more than 10 Units, No High School Diploma, Population who Speak English less than well, Number of Household, Occupied Housing with more People than Rooms. (Data source: American Community 5-Year Survey))'),
+    html.Hr(),
     html.H4('Bayesian Network Model (Not Validated Yet)', style=TEXT_STYLE),
     bn_network,
     html.Hr(),
@@ -182,18 +170,7 @@ content=html.Div([
     html.Hr(),
     html.H5('Predicted Total COVID-19 Cases per County using Neural Network Regression Model', style=TEXT_STYLE),
     html.Div(children=[dcc.Graph(id='choropleth_dl', figure=choro_fig_dl())])])
-# bins=20
-app.layout = html.Div([sidebar,content])
-
-
-# @app.callback(
-#     Output('graph-with-slider', 'figure'),
-#     Input('dropdown', 'value'))
-# def update_figure(selected_year):
-#     if selected_year=='1':
-#         fig = px.line(data_oys,x='period',y='campeche_oys',labels={"period": "Time","campeche_oys":"Oyster Production (kg)"},
-#                          title='Annual Monthly Oyster Production in Campeche, MX')
-#         return fig
+app.layout = html.Div([content])
 
 if __name__ == '__main__':
-    dash_app.run_server(debug=True)
+    app.run_server(debug=True, use_reloader=False)
